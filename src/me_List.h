@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-05-30
+  Last mod.: 2024-06-02
 */
 
 #pragma once
@@ -15,53 +15,49 @@ namespace me_List
     me_BaseTypes::TUint_2,
     me_BaseTypes::TBool;
 
-  typedef TUint_2 TPtr;
-
   // List node
-  struct TNode
+  struct TListNode
   {
-    TPtr DataPtr;
-    struct TNode * NextNode;
+    TUint_2 Data;
+    struct TListNode * Next;
 
     void PrintWrappings();
   };
 
-  // Pointer to node
-  typedef TNode * TNodePtr;
-
-  // Signature of list node handler function
-  typedef TBool (*THandler)(TNodePtr);
+  // List node handler function format
+  typedef TBool (*TNodeHandler)(TListNode*);
 
   // Allocate memory for list node
-  TBool SpawnNode(TNodePtr * NodePtr);
+  TBool SpawnNode(TListNode * * Node);
   // Free memory of list node
-  TBool KillNode(TNodePtr NodePtr);
+  TBool KillNode(TListNode * Node);
   // Iterate over list calling handler for every node
-  TBool Traverse(TNodePtr StartPtr, THandler Handler);
+  TBool Traverse(TListNode * StartPtr, TNodeHandler Handler);
   // Shortcut for Traverse(.., KillNode)
-  TBool KillList(TNodePtr StartPtr);
+  TBool KillList(TListNode * StartPtr);
 
   // Stack container
   struct TStack
   {
-    TStack() : HeadPtr(0) {};
+    TStack() : Head(0) {};
 
-    TNodePtr HeadPtr;
-    void Add(TNodePtr NodePtr);
+    TListNode * Head;
+    void Add(TListNode * Node);
   };
 
   // Queue container
   struct TQueue
   {
-    TQueue() : HeadPtr(0), TailPtr(0) {};
+    TQueue() : Head(0), Tail(0) {};
 
-    TNodePtr HeadPtr;
-    TNodePtr TailPtr;
-    void Add(TNodePtr NodePtr);
+    TListNode * Head;
+    TListNode * Tail;
+    void Add(TListNode * Node);
   };
 }
 
 /*
   2024-05-14
   2024-05-29
+  2024-06-02
 */

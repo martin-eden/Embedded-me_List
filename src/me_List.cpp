@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-05-14
+  Last mod.: 2024-06-02
 */
 
 #include "me_List.h"
@@ -11,98 +11,91 @@
 #include <me_BaseTypes.h>
 
 using
-  me_List::TNode,
-  me_List::TNodePtr,
+  me_List::TListNode,
   me_BaseTypes::TBool;
 
-void TNode::PrintWrappings()
+void TListNode::PrintWrappings()
 {
-  printf("[TNode 0x%04X]", (TUint_2) this);
-  printf(
-    "( DataPtr 0x%04X NextNode 0x%04X )",
-    DataPtr,
-    (TUint_2) NextNode
-  );
+  printf("[TListNode 0x%04X]", (TUint_2) this);
+  printf(" ");
+  printf("( Data 0x%04X Next 0x%04X )", Data, (TUint_2) Next);
 }
 
-TBool me_List::SpawnNode(TNodePtr * NodePtr)
+TBool me_List::SpawnNode(TListNode * * NodePtr)
 {
-  *NodePtr = (TNodePtr) malloc(sizeof(TNode));
+  *NodePtr = (TListNode *) malloc(sizeof(TListNode));
 
   TBool IsSpawned = (*NodePtr != 0);
 
   if (!IsSpawned)
     return false;
 
-  (*NodePtr)->DataPtr = 0;
-  (*NodePtr)->NextNode = 0;
+  (*NodePtr)->Data = 0;
+  (*NodePtr)->Next = 0;
 
-  // printf("SpawnNode(0x%04X)\n", (TUint_2) *NodePtr);
+  // printf("SpawnNode(0x%04X)\n", (TUint_2) *Node);
 
   return true;
 }
 
-TBool me_List::KillNode(TNodePtr NodePtr)
+TBool me_List::KillNode(TListNode * Node)
 {
-  // printf("KillNode(0x%04X)\n", (TUint_2) NodePtr);
+  // printf("KillNode(0x%04X)\n", (TUint_2) Node);
 
-  if (NodePtr == 0)
+  if (Node == 0)
     return false;
 
-  free(NodePtr);
+  free(Node);
 
   return true;
 }
 
-TBool me_List::Traverse(TNodePtr StartPtr, THandler Handler)
+TBool me_List::Traverse(TListNode * FirstNode, TNodeHandler Handler)
 {
   if (Handler == 0)
     return false;
 
-  TNodePtr Cursor = StartPtr;
+  TListNode * Cursor = FirstNode;
   while (Cursor != 0)
   {
-    TBool HandlerResult;
-
-    HandlerResult = Handler(Cursor);
-
-    if (!HandlerResult)
+    if (!Handler(Cursor))
       return false;
 
-    Cursor = Cursor->NextNode;
+    Cursor = Cursor->Next;
   }
 
   return true;
 }
 
-TBool me_List::KillList(TNodePtr StartPtr)
+TBool me_List::KillList(TListNode * FirstNode)
 {
-  return Traverse(StartPtr, KillNode);
+  return Traverse(FirstNode, KillNode);
 }
 
 // --
 
-void me_List::TStack::Add(TNodePtr NodePtr)
+void me_List::TStack::Add(TListNode * Node)
 {
-  NodePtr->NextNode = HeadPtr;
-  HeadPtr = NodePtr;
+  Node->Next = Head;
+  Head = Node;
 }
 
 // --
 
-void me_List::TQueue::Add(TNodePtr NodePtr)
+void me_List::TQueue::Add(TListNode * Node)
 {
-  if (HeadPtr == 0)
-    HeadPtr = NodePtr;
+  if (Head == 0)
+    Head = Node;
 
-  if (TailPtr != 0)
-    TailPtr->NextNode = NodePtr;
+  if (Tail != 0)
+    Tail->Next = Node;
 
-  TailPtr = NodePtr;
+  Tail = Node;
 }
 
 // --
 
 /*
   2024-05-14
+  2024-06-02
 */
