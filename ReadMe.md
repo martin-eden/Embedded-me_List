@@ -1,10 +1,8 @@
 # What
 
-(2024-05 .. )
+(2024-05 .. 2024-06)
 
 Arduino library stack and queue via singly linked list.
-
-Work in progress.
 
 ## Requirements
 
