@@ -1,46 +1,23 @@
 // [me_List] test/debug
 
 /*
-  Last mod.: 2024-05-14
+  Author: Martin Eden
+  Last mod.: 2024-06-02
 */
 
 #include <me_List.h>
 
-#include <me_InstallStandardStreams.h>
 #include <me_UartSpeeds.h>
+#include <me_InstallStandardStreams.h>
 #include <me_BaseTypes.h>
-
-using namespace me_List;
 
 void setup()
 {
-  InstallStandardStreams();
   Serial.begin(me_UartSpeeds::Arduino_Normal_Bps);
-
-  delay(1500);
+  InstallStandardStreams();
 
   printf("[me_List] Hello there.\n");
-
-  // TStack List;
-  TQueue List;
-
-  for (TUint_2 Counter = 1; Counter <= 4; ++Counter)
-  {
-    TNodePtr NodePtr;
-
-    TBool SpawnResult = SpawnNode(&NodePtr);
-
-    if (!SpawnResult)
-      break;
-
-    NodePtr->DataPtr = Counter;
-
-    List.Add(NodePtr);
-  }
-
-  PrintList(List.HeadPtr);
-  KillList(List.HeadPtr);
-
+  Test();
   printf("Done.\n");
 }
 
@@ -48,23 +25,50 @@ void loop()
 {
 }
 
-TBool PrintList(TNodePtr StartPtr)
+// --
+
+void Test()
 {
-  return Traverse(StartPtr, PrintNode);
+  using
+    me_List::TQueue,
+    me_List::TListNode,
+    me_BaseTypes::TUint_2,
+    me_BaseTypes::TBool;
+
+  // TStack List;
+  TQueue List;
+
+  for (TUint_2 Counter = 1; Counter <= 4; ++Counter)
+  {
+    TListNode * Node;
+
+    if (!SpawnNode(&Node))
+      break;
+
+    Node->Data = Counter;
+
+    List.Add(Node);
+  }
+
+  PrintList(List.Head);
+
+  KillList(List.Head);
 }
 
-TBool PrintNode(TNodePtr NodePtr)
+me_BaseTypes::TBool PrintList(me_List::TListNode * FirstNode)
 {
-  printf(
-    "[0x%04X](DataPtr: 0x%04X, NextNode: 0x%04X)\n",
-    (TUint_2) NodePtr,
-    NodePtr->DataPtr,
-    (TUint_2) NodePtr->NextNode
-  );
+  return Traverse(FirstNode, PrintNode);
+}
+
+me_BaseTypes::TBool PrintNode(me_List::TListNode * Node)
+{
+  Node->PrintWrappings();
+  printf("\n");
 
   return true;
 }
 
 /*
   2024-05-14
+  2024-06-02
 */

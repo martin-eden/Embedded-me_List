@@ -21,6 +21,7 @@ namespace me_List
     TUint_2 Data;
     struct TListNode * Next;
 
+    // Debug print
     void PrintWrappings();
   };
 
@@ -36,22 +37,26 @@ namespace me_List
   // Shortcut for Traverse(.., KillNode)
   TBool KillList(TListNode * StartPtr);
 
-  // Stack container
+  // Stack structure
   struct TStack
   {
+    TListNode * Head;
+
     TStack() : Head(0) {};
 
-    TListNode * Head;
+    // Add node
     void Add(TListNode * Node);
   };
 
-  // Queue container
+  // Queue structure
   struct TQueue
   {
-    TQueue() : Head(0), Tail(0) {};
-
     TListNode * Head;
     TListNode * Tail;
+
+    TQueue() : Head(0), Tail(0) {};
+
+    // Add node
     void Add(TListNode * Node);
   };
 }
