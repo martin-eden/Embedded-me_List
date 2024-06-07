@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-02
+  Last mod.: 2024-06-07
 */
 
 #include "me_List.h"
@@ -65,7 +65,6 @@ TBool me_List::KillNode(TListNode * Node)
 
   Iteration starts from <FirstNode> element.
   For each element we call <Handler> with list node.
-  <Handler> may modify fields.
   If <Handler> fails, iteration is stopped.
 
   If iteration wasn't stopped we return true.
