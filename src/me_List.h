@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-02
+  Last mod.: 2024-06-11
 */
 
 #pragma once
@@ -26,7 +26,7 @@ namespace me_List
   };
 
   // List node handler function format
-  typedef TBool (*TNodeHandler)(TListNode*);
+  typedef TBool (*TNodeHandler)(TUint_2);
 
   // Allocate memory for list node
   TBool SpawnNode(TListNode * * Node);
@@ -65,4 +65,5 @@ namespace me_List
   2024-05-14
   2024-05-29
   2024-06-02
+  2024-06-11
 */

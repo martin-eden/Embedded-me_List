@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-02
+  Last mod.: 2024-06-11
 */
 
 #include <me_List.h>
@@ -10,6 +10,9 @@
 #include <me_UartSpeeds.h>
 #include <me_InstallStandardStreams.h>
 #include <me_BaseTypes.h>
+
+// Forwards:
+void Test();
 
 void setup()
 {
@@ -27,16 +30,19 @@ void loop()
 
 // --
 
+using
+  me_BaseTypes::TBool,
+  me_BaseTypes::TUint_2;
+
 void Test()
 {
   using
+    me_List::TStack,
     me_List::TQueue,
-    me_List::TListNode,
-    me_BaseTypes::TUint_2,
-    me_BaseTypes::TBool;
+    me_List::TListNode;
 
-  // TStack List;
-  TQueue List;
+  TStack List;
+  // TQueue List;
 
   for (TUint_2 Counter = 1; Counter <= 4; ++Counter)
   {
@@ -50,19 +56,14 @@ void Test()
     List.Add(Node);
   }
 
-  PrintList(List.Head);
+  Traverse(List.Head, PrintNode);
 
   KillList(List.Head);
 }
 
-me_BaseTypes::TBool PrintList(me_List::TListNode * FirstNode)
+me_BaseTypes::TBool PrintNode(me_BaseTypes::TUint_2 Data)
 {
-  return Traverse(FirstNode, PrintNode);
-}
-
-me_BaseTypes::TBool PrintNode(me_List::TListNode * Node)
-{
-  Node->PrintWrappings();
+  printf("Data(%u)", Data);
   printf("\n");
 
   return true;
@@ -71,4 +72,5 @@ me_BaseTypes::TBool PrintNode(me_List::TListNode * Node)
 /*
   2024-05-14
   2024-06-02
+  2024-06-11
 */

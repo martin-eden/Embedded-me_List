@@ -64,7 +64,7 @@ TBool me_List::KillNode(TListNode * Node)
   Iterate over list
 
   Iteration starts from <FirstNode> element.
-  For each element we call <Handler> with list node.
+  For each element we call <Handler> with list node data.
   If <Handler> fails, iteration is stopped.
 
   If iteration wasn't stopped we return true.
@@ -77,7 +77,7 @@ TBool me_List::Traverse(TListNode * FirstNode, TNodeHandler Handler)
   TListNode * Cursor = FirstNode;
   while (Cursor != 0)
   {
-    if (!Handler(Cursor))
+    if (!Handler(Cursor->Data))
       return false;
 
     Cursor = Cursor->Next;
