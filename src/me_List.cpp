@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-07
+  Last mod.: 2024-06-13
 */
 
 #include "me_List.h"
@@ -23,13 +23,18 @@ void TListNode::PrintWrappings()
 {
   printf("[TListNode 0x%04X]", (TUint_2) this);
   printf(" ");
-  printf("( Data 0x%04X Next 0x%04X )", Data, (TUint_2) Next);
+  printf("( Data 0x%04X Next 0x%04X )", Payload, (TUint_2) Next);
+  printf("\n");
 }
 
 /*
-  Allocate memory for list node
+  Allocate memory for list node with given data
 */
-TBool me_List::SpawnNode(TListNode * * NodePtr)
+TBool me_List::SpawnNode(
+  TListNode * * NodePtr,
+  TUint_2 Payload,
+  TListNode * Next
+)
 {
   *NodePtr = (TListNode *) malloc(sizeof(TListNode));
 
@@ -38,8 +43,8 @@ TBool me_List::SpawnNode(TListNode * * NodePtr)
   if (!IsSpawned)
     return false;
 
-  (*NodePtr)->Data = 0;
-  (*NodePtr)->Next = 0;
+  (*NodePtr)->Payload = Payload;
+  (*NodePtr)->Next = Next;
 
   return true;
 }
@@ -52,7 +57,9 @@ TBool me_List::KillNode(TListNode * Node)
   if (Node == 0)
     return false;
 
-  Node->Data = 0;
+  // Node->PrintWrappings();
+
+  Node->Payload = 0;
   Node->Next = 0;
 
   free(Node);
@@ -60,24 +67,48 @@ TBool me_List::KillNode(TListNode * Node)
   return true;
 }
 
-/*
-  Iterate over list
+// --
 
-  Iteration starts from <FirstNode> element.
-  For each element we call <Handler> with list node data.
-  If <Handler> fails, iteration is stopped.
+/*
+  Add node with given data to stack structure
+*/
+TBool me_List::TStack::Add(TUint_2 Payload)
+{
+  TListNode * Node;
+
+  if (!SpawnNode(&Node, Payload, Head))
+    return false;
+
+  Head = Node;
+
+  return true;
+}
+
+/*
+  Iterate over list data
+
+  For each element we call <Handler> with list node data and externally
+  provided data. If <Handler> returns false, iteration is stopped.
 
   If iteration wasn't stopped we return true.
+
+  "Externally provided data" means you can use Traverse() to find item
+  with specific value. Or you can address of your structure there and
+  address of you method, so it becomes method call.
 */
-TBool me_List::Traverse(TListNode * FirstNode, TNodeHandler Handler)
+TBool me_List::TStack::Traverse(
+  TNodeHandler Handler,
+  TUint_2 HandlerData
+)
 {
   if (Handler == 0)
     return false;
 
-  TListNode * Cursor = FirstNode;
+  TListNode * Cursor = Head;
+
   while (Cursor != 0)
   {
-    if (!Handler(Cursor->Data))
+    if (!Handler(Cursor->Payload, HandlerData))
       return false;
 
     Cursor = Cursor->Next;
@@ -86,39 +117,43 @@ TBool me_List::Traverse(TListNode * FirstNode, TNodeHandler Handler)
   return true;
 }
 
+// Shortcut for Traverse() without <HandlerData>
+TBool me_List::TStack::Traverse(TNodeHandler Handler)
+{
+  return Traverse(Handler, 0);
+}
+
 /*
   Release memory of all list nodes
 */
-TBool me_List::KillList(TListNode * FirstNode)
+void me_List::TStack::Release()
 {
-  TListNode * Cursor = FirstNode;
+  TListNode * Cursor = Head;
+
   while (Cursor != 0)
   {
     TListNode * NextNode = Cursor->Next;
+
     KillNode(Cursor);
+
     Cursor = NextNode;
   }
-  return true;
+
+  Head = 0;
 }
 
 // --
 
 /*
-  Add node to stack structure
+  Add node with given data to queue structure
 */
-void me_List::TStack::Add(TListNode * Node)
+TBool me_List::TQueue::Add(TUint_2 Payload)
 {
-  Node->Next = Head;
-  Head = Node;
-}
+  TListNode * Node;
 
-// --
+  if (!SpawnNode(&Node, Payload, 0))
+    return false;
 
-/*
-  Add node to queue structure
-*/
-void me_List::TQueue::Add(TListNode * Node)
-{
   if (Head == 0)
     Head = Node;
 
@@ -126,6 +161,8 @@ void me_List::TQueue::Add(TListNode * Node)
     Tail->Next = Node;
 
   Tail = Node;
+
+  return true;
 }
 
 // --
@@ -133,4 +170,5 @@ void me_List::TQueue::Add(TListNode * Node)
 /*
   2024-05-14
   2024-06-02
+  2024-06-13 Add() works with payload, Traverse() inside, TQueue is inherited
 */
