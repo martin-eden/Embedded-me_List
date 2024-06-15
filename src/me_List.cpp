@@ -53,8 +53,6 @@ TBool me_List::KillNode(TListNode * Node)
   if (Node == 0)
     return false;
 
-  // Node->PrintWrappings();
-
   Node->Payload = 0;
   Node->Next = 0;
 

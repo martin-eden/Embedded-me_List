@@ -63,14 +63,11 @@ namespace me_List
     TBool Add(TUint_2 Payload);
     // Remove first node
     TBool Remove();
+    // Release memory of all nodes
+    void Release();
     // Iterate over list calling handler for every node
     void Traverse(TNodeHandler Handler, TUint_2 HandlerData);
     void Traverse(TNodeHandler Handler);
-    // Release memory of all nodes
-    void Release();
-
-    void PrintWrappings();
-    void Print();
   };
 
   /*
@@ -83,7 +80,7 @@ namespace me_List
     it's queue.
 
     Ability to add to arbitrary list end is possible but I found no
-    practical usage for it. So Add() method is just overridden.
+    practical usage for it.
   */
   struct TQueue : TStack
   {
