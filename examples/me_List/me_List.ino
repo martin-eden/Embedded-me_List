@@ -75,9 +75,12 @@ void Test()
 /*
   Node handler
 
+  First argument is list item data. Second is second piggyback argument
+  from Traverse().
+
   For egocentric functions you need just your data.
 
-  For cases like "find node with minimum value" you want to store
+  For handlers like "find node with minimum value" you want to store
   your findings somewhere. Or load additional data from somewhere,
   if you are doing "find node with this value". That's why second
   address, <HandlerData>. Put there address of your object and you

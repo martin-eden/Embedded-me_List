@@ -23,7 +23,7 @@ void TListNode::PrintWrappings()
 {
   printf("[TListNode 0x%04X]", (TUint_2) this);
   printf(" ");
-  printf("( Data 0x%04X Next 0x%04X )", Payload, (TUint_2) Next);
+  printf("( Payload 0x%04X Next 0x%04X )", Payload, (TUint_2) Next);
   printf("\n");
 }
 
@@ -71,6 +71,8 @@ TBool me_List::KillNode(TListNode * Node)
 
 /*
   Add node with given data to stack structure
+
+  Returns false when no memory.
 */
 TBool me_List::TStack::Add(TUint_2 Payload)
 {
@@ -82,6 +84,33 @@ TBool me_List::TStack::Add(TUint_2 Payload)
   Head = Node;
 
   return true;
+}
+
+/*
+  Remove (first) node from structure
+
+  Returns false when structure is empty.
+*/
+TBool me_List::TStack::Remove()
+{
+  if (Head == 0)
+    return false;
+
+  TListNode * NextHead = Head->Next;
+
+  KillNode(Head);
+
+  Head = NextHead;
+
+  return true;
+}
+
+/*
+  Release memory of all list nodes
+*/
+void me_List::TStack::Release()
+{
+  while (Remove());
 }
 
 /*
@@ -118,29 +147,12 @@ void me_List::TStack::Traverse(TNodeHandler Handler)
   Traverse(Handler, 0);
 }
 
-/*
-  Release memory of all list nodes
-*/
-void me_List::TStack::Release()
-{
-  TListNode * Cursor = Head;
-
-  while (Cursor != 0)
-  {
-    TListNode * NextNode = Cursor->Next;
-
-    KillNode(Cursor);
-
-    Cursor = NextNode;
-  }
-
-  Head = 0;
-}
-
 // --
 
 /*
   Add node with given data to queue structure
+
+  Returns false when there are no memory.
 */
 TBool me_List::TQueue::Add(TUint_2 Payload)
 {
