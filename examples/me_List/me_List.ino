@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-13
+  Last mod.: 2024-06-15
 */
 
 #include <me_List.h>
@@ -31,11 +31,10 @@ void loop()
 // --
 
 using
-  me_BaseTypes::TBool,
   me_BaseTypes::TUint_2;
 
 // Forwards:
-TBool PrintNode(TUint_2 NodeData, TUint_2 HandlerData);
+void PrintNode(TUint_2 NodeData, TUint_2 HandlerData);
 
 // Show stuff
 void Test()
@@ -83,18 +82,13 @@ void Test()
   if you are doing "find node with this value". That's why second
   address, <HandlerData>. Put there address of your object and you
   can call it's methods.
-
-  When handler returns false it means iteration over list should
-  be stopped.
 */
-TBool PrintNode(
+void PrintNode(
   TUint_2 NodeData,
   TUint_2 HandlerData __attribute__((unused))
 )
 {
   printf("Data(%u)\n", NodeData);
-
-  return true;
 }
 
 /*
@@ -102,4 +96,5 @@ TBool PrintNode(
   2024-06-02
   2024-06-11
   2024-06-13
+  2024-06-15
 */

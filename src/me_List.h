@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-13
+  Last mod.: 2024-06-15
 */
 
 #pragma once
@@ -40,7 +40,7 @@ namespace me_List
     So for iterator it is three-address format: Handler, HandlerData,
     NodeData.
   */
-  typedef TBool (*TNodeHandler)(TUint_2 NodePayload, TUint_2 HandlerData);
+  typedef void (*TNodeHandler)(TUint_2 NodePayload, TUint_2 HandlerData);
 
   // Allocate memory for list node with given data
   TBool SpawnNode(TListNode * * Node, TUint_2 Payload, TListNode * Next);
@@ -64,8 +64,8 @@ namespace me_List
     // Remove first node
     TBool Remove();
     // Iterate over list calling handler for every node
-    TBool Traverse(TNodeHandler Handler, TUint_2 HandlerData);
-    TBool Traverse(TNodeHandler Handler);
+    void Traverse(TNodeHandler Handler, TUint_2 HandlerData);
+    void Traverse(TNodeHandler Handler);
     // Release memory of all nodes
     void Release();
 
@@ -102,4 +102,5 @@ namespace me_List
   2024-06-02
   2024-06-11
   2024-06-13
+  2024-06-15
 */
