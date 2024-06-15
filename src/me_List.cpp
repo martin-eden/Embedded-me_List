@@ -30,11 +30,7 @@ void TListNode::PrintWrappings()
 /*
   Allocate memory for list node with given data
 */
-TBool me_List::SpawnNode(
-  TListNode * * NodePtr,
-  TUint_2 Payload,
-  TListNode * Next
-)
+TBool me_List::SpawnNode(TListNode * * NodePtr, TUint_2 Payload)
 {
   *NodePtr = (TListNode *) malloc(sizeof(TListNode));
 
@@ -44,7 +40,7 @@ TBool me_List::SpawnNode(
     return false;
 
   (*NodePtr)->Payload = Payload;
-  (*NodePtr)->Next = Next;
+  (*NodePtr)->Next = 0;
 
   return true;
 }
@@ -78,9 +74,10 @@ TBool me_List::TStack::Add(TUint_2 Payload)
 {
   TListNode * Node;
 
-  if (!SpawnNode(&Node, Payload, Head))
+  if (!SpawnNode(&Node, Payload))
     return false;
 
+  Node->Next = Head;
   Head = Node;
 
   return true;
@@ -158,7 +155,7 @@ TBool me_List::TQueue::Add(TUint_2 Payload)
 {
   TListNode * Node;
 
-  if (!SpawnNode(&Node, Payload, 0))
+  if (!SpawnNode(&Node, Payload))
     return false;
 
   if (Head == 0)
