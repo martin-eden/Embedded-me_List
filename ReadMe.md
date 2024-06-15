@@ -2,7 +2,7 @@
 
 (2024-05 .. 2024-06)
 
-Arduino library stack and queue via singly linked list.
+Stack and queue implementation via singly linked list. Arduino (AVR).
 
 ## Requirements
 
