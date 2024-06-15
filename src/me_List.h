@@ -64,8 +64,7 @@ namespace me_List
     // Release memory of all nodes
     void Release();
     // Iterate over list calling handler for every node
-    void Traverse(TNodeHandler Handler, TUint_2 HandlerData);
-    void Traverse(TNodeHandler Handler);
+    void Traverse(TNodeHandler Handler, TUint_2 HandlerData = 0);
 
     protected:
       TListNode * Head;

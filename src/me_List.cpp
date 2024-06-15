@@ -15,7 +15,7 @@ using
   me_BaseTypes::TBool;
 
 /*
-  Print contents of structure to stdout in human-readable format.
+  Print contents of node structure to stdout in human-readable format.
 
   Useful for debug/testing.
 */
@@ -134,12 +134,6 @@ void me_List::TStack::Traverse(
 
     Cursor = Cursor->Next;
   }
-}
-
-// Shortcut for Traverse() without <HandlerData>
-void me_List::TStack::Traverse(TNodeHandler Handler)
-{
-  Traverse(Handler, 0);
 }
 
 // --
