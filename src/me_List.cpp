@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-13
+  Last mod.: 2024-06-15
 */
 
 #include "me_List.h"
@@ -88,39 +88,34 @@ TBool me_List::TStack::Add(TUint_2 Payload)
   Iterate over list data
 
   For each element we call <Handler> with list node data and externally
-  provided data. If <Handler> returns false, iteration is stopped.
-
-  If iteration wasn't stopped we return true.
+  provided data.
 
   "Externally provided data" means you can use Traverse() to find item
-  with specific value. Or you can address of your structure there and
-  address of you method, so it becomes method call.
+  with specific value. Or you can put address of your structure there
+  so with address of you method it becomes method call.
 */
-TBool me_List::TStack::Traverse(
+void me_List::TStack::Traverse(
   TNodeHandler Handler,
   TUint_2 HandlerData
 )
 {
   if (Handler == 0)
-    return false;
+    return;
 
   TListNode * Cursor = Head;
 
   while (Cursor != 0)
   {
-    if (!Handler(Cursor->Payload, HandlerData))
-      return false;
+    Handler(Cursor->Payload, HandlerData);
 
     Cursor = Cursor->Next;
   }
-
-  return true;
 }
 
 // Shortcut for Traverse() without <HandlerData>
-TBool me_List::TStack::Traverse(TNodeHandler Handler)
+void me_List::TStack::Traverse(TNodeHandler Handler)
 {
-  return Traverse(Handler, 0);
+  Traverse(Handler, 0);
 }
 
 /*
@@ -171,4 +166,5 @@ TBool me_List::TQueue::Add(TUint_2 Payload)
   2024-05-14
   2024-06-02
   2024-06-13 Add() works with payload, Traverse() inside, TQueue is inherited
+  2024-06-15 Traverse() is always iterates all list, no mid-stops
 */
