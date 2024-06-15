@@ -43,7 +43,7 @@ namespace me_List
   typedef void (*TNodeHandler)(TUint_2 NodePayload, TUint_2 HandlerData);
 
   // Allocate memory for list node with given data
-  TBool SpawnNode(TListNode * * Node, TUint_2 Payload, TListNode * Next);
+  TBool SpawnNode(TListNode * * Node, TUint_2 Payload);
   // Free memory of list node
   TBool KillNode(TListNode * Node);
 
