@@ -54,8 +54,6 @@ namespace me_List
   */
   struct TStack
   {
-    TListNode * Head;
-
     TStack() : Head(0) {};
     ~TStack() { Release(); };
 
@@ -68,6 +66,9 @@ namespace me_List
     // Iterate over list calling handler for every node
     void Traverse(TNodeHandler Handler, TUint_2 HandlerData);
     void Traverse(TNodeHandler Handler);
+
+    protected:
+      TListNode * Head;
   };
 
   /*
@@ -84,12 +85,13 @@ namespace me_List
   */
   struct TQueue : TStack
   {
-    TListNode * Tail;
-
     TQueue() : Tail(0) {};
 
     // Add node
     TBool Add(TUint_2 Payload);
+
+    protected:
+      TListNode * Tail;
   };
 }
 
