@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-15
+  Last mod.: 2024-06-21
 */
 
 #include "me_List.h"
@@ -62,6 +62,14 @@ TBool me_List::KillNode(TListNode * Node)
 }
 
 // --
+
+/*
+  Indicator that list is empty
+*/
+TBool me_List::TStack::IsEmpty()
+{
+  return (Head == 0);
+}
 
 /*
   Add node with given data to stack structure
@@ -168,4 +176,5 @@ TBool me_List::TQueue::Add(TUint_2 Payload)
   2024-06-02
   2024-06-13 Add() works with payload, Traverse() inside, TQueue is inherited
   2024-06-15 Traverse() is always iterates all list, no mid-stops
+  2024-06-21 IsEmpty()
 */

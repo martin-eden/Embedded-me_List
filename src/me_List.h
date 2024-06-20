@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-15
+  Last mod.: 2024-06-21
 */
 
 #pragma once
@@ -57,6 +57,8 @@ namespace me_List
     TStack() : Head(0) {};
     ~TStack() { Release(); };
 
+    // Emptiness indicator
+    TBool IsEmpty();
     // Add node with data to start
     TBool Add(TUint_2 Payload);
     // Remove first node
@@ -101,4 +103,5 @@ namespace me_List
   2024-06-11
   2024-06-13
   2024-06-15
+  2024-06-21
 */
