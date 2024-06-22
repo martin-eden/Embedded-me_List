@@ -125,7 +125,7 @@ void me_List::TStack::Release()
 */
 void me_List::TStack::Traverse(
   TNodeHandler Handler,
-  TUint_2 HandlerData
+  TUint_2 HandlerBaggage
 )
 {
   if (Handler == 0)
@@ -135,7 +135,7 @@ void me_List::TStack::Traverse(
 
   while (Cursor != 0)
   {
-    Handler(Cursor->Payload, HandlerData);
+    Handler(Cursor->Payload, HandlerBaggage);
 
     Cursor = Cursor->Next;
   }
