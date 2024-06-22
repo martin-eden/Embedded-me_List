@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Uninstall library
-arduino-cli lib uninstall me_Menu
+arduino-cli lib uninstall me_List
 
 # Uninstall dependencies
 arduino-cli lib uninstall \
-  me_UartSpeeds \
-  me_InstallStandardStreams \
   me_MemorySegment \
   me_MemoryPoint \
+  me_InstallStandardStreams \
+  me_UartSpeeds \
   me_BaseTypes
