@@ -2,12 +2,14 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-21
+  Last mod.: 2024-06-22
 */
 
 #include "me_List.h"
 
-#include <Arduino.h> // malloc(), free(), printf()
+#include <stdio.h> // printf()
+
+#include <me_MemorySegment.h> // Reserve()/Release()
 #include <me_BaseTypes.h>
 
 using
@@ -30,17 +32,16 @@ void TListNode::PrintWrappings()
 /*
   Allocate memory for list node with given data
 */
-TBool me_List::SpawnNode(TListNode * * NodePtr, TUint_2 Payload)
+TBool me_List::SpawnNode(TListNode * * Node, TUint_2 Payload)
 {
-  *NodePtr = (TListNode *) malloc(sizeof(TListNode));
+  me_MemorySegment::TMemorySegment NodeSeg;
 
-  TBool IsSpawned = (*NodePtr != 0);
-
-  if (!IsSpawned)
+  if (!NodeSeg.Reserve(sizeof(TListNode)))
     return false;
 
-  (*NodePtr)->Payload = Payload;
-  (*NodePtr)->Next = 0;
+  *Node = (TListNode *) NodeSeg.Start.Addr;
+
+  (*Node)->Payload = Payload;
 
   return true;
 }
@@ -50,15 +51,12 @@ TBool me_List::SpawnNode(TListNode * * NodePtr, TUint_2 Payload)
 */
 TBool me_List::KillNode(TListNode * Node)
 {
-  if (Node == 0)
-    return false;
+  me_MemorySegment::TMemorySegment NodeSeg;
 
-  Node->Payload = 0;
-  Node->Next = 0;
+  NodeSeg.Start.Addr = (TUint_2) Node;
+  NodeSeg.Size = sizeof(TListNode);
 
-  free(Node);
-
-  return true;
+  return NodeSeg.Release();
 }
 
 // --
@@ -123,8 +121,7 @@ void me_List::TStack::Release()
   provided data.
 
   "Externally provided data" means you can use Traverse() to find item
-  with specific value. Or you can put address of your structure there
-  so with address of you method it becomes method call.
+  with specific value.
 */
 void me_List::TStack::Traverse(
   TNodeHandler Handler,
@@ -176,5 +173,5 @@ TBool me_List::TQueue::Add(TUint_2 Payload)
   2024-06-02
   2024-06-13 Add() works with payload, Traverse() inside, TQueue is inherited
   2024-06-15 Traverse() is always iterates all list, no mid-stops
-  2024-06-21 IsEmpty()
+  2024-06-20 IsEmpty()
 */
