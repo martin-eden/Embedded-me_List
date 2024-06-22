@@ -47,24 +47,25 @@ namespace me_List
 
     Using one cell of memory we can track start of list. So it is stack.
   */
-  struct TStack
+  class TStack
   {
-    TStack() : Head(0) {};
-    ~TStack() { Release(); };
-
-    // Emptiness indicator
-    TBool IsEmpty();
-    // Add node with data to start
-    TBool Add(TUint_2 Payload);
-    // Remove first node
-    void Remove();
-    // Release memory of all nodes
-    void Release();
-    // Iterate over list calling handler for every node
-    void Traverse(TNodeHandler Handler, TUint_2 HandlerData = 0);
-
     protected:
       TListNode * Head;
+
+    public:
+      TStack() : Head(0) {};
+      ~TStack() { Release(); };
+
+      // Emptiness indicator
+      TBool IsEmpty();
+      // Add node with data to start
+      TBool Add(TUint_2 Payload);
+      // Remove first node
+      void Remove();
+      // Release memory of all nodes
+      void Release();
+      // Iterate over list calling handler for every node
+      void Traverse(TNodeHandler Handler, TUint_2 HandlerData = 0);
   };
 
   /*
@@ -75,19 +76,17 @@ namespace me_List
     So Add() now has freedom to which end to add. But meh, if
     you want add to start, just use TStack. Here Add() adds to tail,
     it's queue.
-
-    Ability to add to arbitrary list end is possible but I found no
-    practical usage for it.
   */
-  struct TQueue : TStack
+  class TQueue : public TStack
   {
-    TQueue() : Tail(0) {};
-
-    // Add node
-    TBool Add(TUint_2 Payload);
-
     protected:
       TListNode * Tail;
+
+    public:
+      TQueue() : Tail(0) {};
+
+      // Add node
+      TBool Add(TUint_2 Payload);
   };
 }
 
@@ -99,5 +98,5 @@ namespace me_List
   2024-06-13
   2024-06-15
   2024-06-21
-  2024-06-22 Hid SpawnNode()/KillNode()
+  2024-06-22 Classes. Hid SpawnNode()/KillNode()
 */
