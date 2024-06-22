@@ -14,7 +14,11 @@
 
 using
   me_List::TListNode,
-  me_BaseTypes::TBool;
+  me_List::TStack,
+  me_List::TQueue,
+  me_MemorySegment::TMemorySegment,
+  me_BaseTypes::TBool,
+  me_BaseTypes::TUint_2;
 
 /*
   Print contents of node structure to stdout in human-readable format.
@@ -32,9 +36,9 @@ void TListNode::PrintWrappings()
 /*
   Allocate memory for list node with given data
 */
-TBool me_List::SpawnNode(TListNode * * Node, TUint_2 Payload)
+TBool SpawnNode(TListNode * * Node, TUint_2 Payload)
 {
-  me_MemorySegment::TMemorySegment NodeSeg;
+  TMemorySegment NodeSeg;
 
   if (!NodeSeg.Reserve(sizeof(TListNode)))
     return false;
@@ -49,14 +53,14 @@ TBool me_List::SpawnNode(TListNode * * Node, TUint_2 Payload)
 /*
   Release memory of list node
 */
-TBool me_List::KillNode(TListNode * Node)
+void KillNode(TListNode * Node)
 {
-  me_MemorySegment::TMemorySegment NodeSeg;
+  TMemorySegment NodeSeg;
 
   NodeSeg.Start.Addr = (TUint_2) Node;
   NodeSeg.Size = sizeof(TListNode);
 
-  return NodeSeg.Release();
+  NodeSeg.Release();
 }
 
 // --
@@ -77,13 +81,10 @@ TBool me_List::TStack::IsEmpty()
 TBool me_List::TStack::Add(TUint_2 Payload)
 {
   TListNode * Node;
-
   if (!SpawnNode(&Node, Payload))
     return false;
-
   Node->Next = Head;
   Head = Node;
-
   return true;
 }
 
@@ -92,18 +93,13 @@ TBool me_List::TStack::Add(TUint_2 Payload)
 
   Returns false when structure is empty.
 */
-TBool me_List::TStack::Remove()
+void me_List::TStack::Remove()
 {
-  if (Head == 0)
-    return false;
-
+  if (IsEmpty())
+    return;
   TListNode * NextHead = Head->Next;
-
   KillNode(Head);
-
   Head = NextHead;
-
-  return true;
 }
 
 /*
@@ -111,7 +107,8 @@ TBool me_List::TStack::Remove()
 */
 void me_List::TStack::Release()
 {
-  while (Remove());
+  while (!IsEmpty())
+    Remove();
 }
 
 /*
@@ -136,7 +133,6 @@ void me_List::TStack::Traverse(
   while (Cursor != 0)
   {
     Handler(Cursor->Payload, HandlerBaggage);
-
     Cursor = Cursor->Next;
   }
 }
