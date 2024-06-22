@@ -25,9 +25,6 @@ namespace me_List
   {
     TUint_2 Payload;
     struct TListNode * Next;
-
-    // Debug print
-    void PrintWrappings();
   };
 
   /*
@@ -37,10 +34,10 @@ namespace me_List
     its own data too. So I can use Traverse() for more than just
     printing list of nodes but also for finding specific data.
 
-    So for iterator it is three-address format: Handler, HandlerData,
-    NodeData.
+    So for iterator it is three-address format: Handler, HandlerBaggage,
+    NodePayload.
   */
-  typedef void (*TNodeHandler)(TUint_2 NodePayload, TUint_2 HandlerData);
+  typedef void (*TNodeHandler)(TUint_2 NodePayload, TUint_2 HandlerBaggage);
 
   /*
     Stack structure

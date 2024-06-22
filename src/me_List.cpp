@@ -7,8 +7,6 @@
 
 #include "me_List.h"
 
-#include <stdio.h> // printf()
-
 #include <me_MemorySegment.h> // Reserve()/Release()
 #include <me_BaseTypes.h>
 
@@ -19,19 +17,6 @@ using
   me_MemorySegment::TMemorySegment,
   me_BaseTypes::TBool,
   me_BaseTypes::TUint_2;
-
-/*
-  Print contents of node structure to stdout in human-readable format.
-
-  Useful for debug/testing.
-*/
-void TListNode::PrintWrappings()
-{
-  printf("[TListNode 0x%04X]", (TUint_2) this);
-  printf(" ");
-  printf("( Payload 0x%04X Next 0x%04X )", Payload, (TUint_2) Next);
-  printf("\n");
-}
 
 /*
   Allocate memory for list node with given data
