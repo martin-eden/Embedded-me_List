@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-21
+  Last mod.: 2024-06-22
 */
 
 #pragma once
@@ -42,11 +42,6 @@ namespace me_List
   */
   typedef void (*TNodeHandler)(TUint_2 NodePayload, TUint_2 HandlerData);
 
-  // Allocate memory for list node with given data
-  TBool SpawnNode(TListNode * * Node, TUint_2 Payload);
-  // Free memory of list node
-  TBool KillNode(TListNode * Node);
-
   /*
     Stack structure
 
@@ -62,7 +57,7 @@ namespace me_List
     // Add node with data to start
     TBool Add(TUint_2 Payload);
     // Remove first node
-    TBool Remove();
+    void Remove();
     // Release memory of all nodes
     void Release();
     // Iterate over list calling handler for every node
@@ -104,4 +99,5 @@ namespace me_List
   2024-06-13
   2024-06-15
   2024-06-21
+  2024-06-22 Hid SpawnNode()/KillNode()
 */
