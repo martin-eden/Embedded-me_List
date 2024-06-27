@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-22
+  Last mod.: 2024-06-27
 */
 
 #include "me_List.h"
@@ -53,7 +53,7 @@ void KillNode(TListNode * Node)
 /*
   Indicator that list is empty
 */
-TBool me_List::TStack::IsEmpty()
+TBool TStack::IsEmpty()
 {
   return (Head == 0);
 }
@@ -63,7 +63,7 @@ TBool me_List::TStack::IsEmpty()
 
   Returns false when no memory.
 */
-TBool me_List::TStack::Add(TUint_2 Payload)
+TBool TStack::Add(TUint_2 Payload)
 {
   TListNode * Node;
   if (!SpawnNode(&Node, Payload))
@@ -78,7 +78,7 @@ TBool me_List::TStack::Add(TUint_2 Payload)
 
   Returns false when structure is empty.
 */
-void me_List::TStack::Remove()
+void TStack::Remove()
 {
   if (IsEmpty())
     return;
@@ -90,7 +90,7 @@ void me_List::TStack::Remove()
 /*
   Release memory of all list nodes
 */
-void me_List::TStack::Release()
+void TStack::Release()
 {
   while (!IsEmpty())
     Remove();
@@ -105,9 +105,9 @@ void me_List::TStack::Release()
   "Externally provided data" means you can use Traverse() to find item
   with specific value.
 */
-void me_List::TStack::Traverse(
-  TNodeHandler Handler,
-  TUint_2 HandlerBaggage
+void TStack::Traverse(
+  TMethod Handler,
+  TUint_2 HandlerState
 )
 {
   if (Handler == 0)
@@ -117,7 +117,7 @@ void me_List::TStack::Traverse(
 
   while (Cursor != 0)
   {
-    Handler(Cursor->Payload, HandlerBaggage);
+    Handler(Cursor->Payload, HandlerState);
     Cursor = Cursor->Next;
   }
 }
@@ -129,7 +129,7 @@ void me_List::TStack::Traverse(
 
   Returns false when there are no memory.
 */
-TBool me_List::TQueue::Add(TUint_2 Payload)
+TBool TQueue::Add(TUint_2 Payload)
 {
   TListNode * Node;
 

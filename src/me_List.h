@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-22
+  Last mod.: 2024-06-27
 */
 
 #pragma once
@@ -13,7 +13,8 @@ namespace me_List
 {
   using
     me_BaseTypes::TUint_2,
-    me_BaseTypes::TBool;
+    me_BaseTypes::TBool,
+    me_BaseTypes::TMethod;
 
   /*
     List node
@@ -26,18 +27,6 @@ namespace me_List
     TUint_2 Payload;
     struct TListNode * Next;
   };
-
-  /*
-    List node handler function format
-
-    I want <Handler> to have access not only to node data but to
-    its own data too. So I can use Traverse() for more than just
-    printing list of nodes but also for finding specific data.
-
-    So for iterator it is three-address format: Handler, HandlerBaggage,
-    NodePayload.
-  */
-  typedef void (*TNodeHandler)(TUint_2 NodePayload, TUint_2 HandlerBaggage);
 
   /*
     Stack structure
@@ -62,7 +51,7 @@ namespace me_List
       // Release memory of all nodes
       void Release();
       // Iterate over list calling handler for every node
-      void Traverse(TNodeHandler Handler, TUint_2 HandlerData = 0);
+      void Traverse(TMethod Handler, TUint_2 HandlerState = 0);
   };
 
   /*
