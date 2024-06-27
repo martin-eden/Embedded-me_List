@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-15
+  Last mod.: 2024-06-27
 */
 
 #include <me_List.h>
@@ -34,31 +34,31 @@ using
   me_BaseTypes::TUint_2;
 
 // Forwards:
-void PrintNode(TUint_2 NodeData, TUint_2 HandlerData);
+void PrintNode(TUint_2 Data, TUint_2 State);
 
 // Show stuff
 void Test()
 {
   /*
-    We will create stack (or maybe queue) list, add some numbers to it,
-    print it and release memory.
+    We will create stack (or maybe queue), add some numbers to it,
+    print them and release memory.
 
-    Actually memory will be released when <List> variable leave scope
-    i.e. at end of function. So List.Release() here is not strictly
-    needed.
+    Notes
 
-    * Memory leaks test
+      * List.Release() releases memory explicitly. It's safe to call it
+        more than once.
 
-      You can test that memory is properly released by trying to
-      allocate more nodes that can be fit into memory and calling this
-      function several times: "Counter <= 4000, Test(); Test();"
+        Here memory is released when <List> variable leaves scope at the
+        end of function.
 
-      Number of nodes allocated and printed should stay the same.
+      * List.Add() returns false when there is no memory for node.
 
-    * No memory condition
+        We are not checking it here because we don't care.
 
-      When we have no memory to allocate next node,
-      Add() will return false.
+      * Test for memory leaks
+
+        Try to add more nodes than memory. Like 4000. Print list.
+        Call twice.
   */
 
   // me_List::TStack List;
@@ -68,8 +68,6 @@ void Test()
     List.Add(Counter);
 
   List.Traverse(PrintNode);
-
-  List.Release();
 }
 
 /*
@@ -83,15 +81,14 @@ void Test()
   For handlers like "find node with minimum value" you want to store
   your findings somewhere. Or load additional data from somewhere,
   if you are doing "find node with this value". That's why second
-  address, <HandlerData>. Put there address of your object and you
-  can call it's methods.
+  argument. Typically both arguments are pointers.
 */
 void PrintNode(
-  TUint_2 NodeData,
-  TUint_2 HandlerData __attribute__((unused))
+  TUint_2 Data,
+  TUint_2 State __attribute__((unused))
 )
 {
-  printf("Data(%u)\n", NodeData);
+  printf("Data(%u)\n", Data);
 }
 
 /*
@@ -100,4 +97,5 @@ void PrintNode(
   2024-06-11
   2024-06-13
   2024-06-15
+  2024-06-27
 */
