@@ -14,9 +14,7 @@ using
   me_List::TListNode,
   me_List::TStack,
   me_List::TQueue,
-  me_MemorySegment::TMemorySegment,
-  me_BaseTypes::TBool,
-  me_BaseTypes::TUint_2;
+  me_MemorySegment::TMemorySegment;
 
 /*
   Allocate memory for list node with given data
