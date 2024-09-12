@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-27
+  Last mod.: 2024-09-12
 */
 
 #pragma once
@@ -11,11 +11,6 @@
 
 namespace me_List
 {
-  using
-    me_BaseTypes::TUint_2,
-    me_BaseTypes::TBool,
-    me_BaseTypes::TMethod;
-
   /*
     List node
 

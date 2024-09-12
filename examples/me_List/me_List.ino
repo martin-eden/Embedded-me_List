@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-27
+  Last mod.: 2024-09-12
 */
 
 #include <me_List.h>
@@ -29,9 +29,6 @@ void loop()
 }
 
 // --
-
-using
-  me_BaseTypes::TUint_2;
 
 // Forwards:
 void PrintNode(TUint_2 Data, TUint_2 State);
