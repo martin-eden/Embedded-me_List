@@ -69,6 +69,20 @@ namespace me_List
       // Add node
       TBool Add(TUint_2 Payload);
   };
+
+  namespace Freetown
+  {
+    // Allocate memory for list node with given data
+    TBool SpawnNode(
+      TListNode * * Node,
+      TUint_2 Payload
+    );
+
+    // Release memory of list node
+    void KillNode(
+      TListNode * Node
+    );
+  }
 }
 
 /*
@@ -80,4 +94,5 @@ namespace me_List
   2024-06-15
   2024-06-21
   2024-06-22 Classes. Hid SpawnNode()/KillNode()
+  2024-10-05 SpawnNode/KillNode() is back as freelancers in Freetown
 */
