@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-09-12
+  Last mod.: 2024-10-05
 */
 
 #include <me_List.h>
@@ -46,7 +46,7 @@ void Test()
         more than once.
 
         Here memory is released when <List> variable leaves scope at the
-        end of function.
+        end of function. List.Release() is called from destructor.
 
       * List.Add() returns false when there is no memory for node.
 
