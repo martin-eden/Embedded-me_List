@@ -2,51 +2,18 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-06-27
+  Last mod.: 2024-10-05
 */
 
 #include "me_List.h"
 
-#include <me_MemorySegment.h> // Reserve()/Release()
 #include <me_BaseTypes.h>
 
+using namespace me_List;
+
 using
-  me_List::TListNode,
-  me_List::TStack,
-  me_List::TQueue,
-  me_MemorySegment::TMemorySegment;
-
-/*
-  Allocate memory for list node with given data
-*/
-TBool SpawnNode(TListNode * * Node, TUint_2 Payload)
-{
-  TMemorySegment NodeSeg;
-
-  if (!NodeSeg.Reserve(sizeof(TListNode)))
-    return false;
-
-  *Node = (TListNode *) NodeSeg.Start.Addr;
-
-  (*Node)->Payload = Payload;
-
-  return true;
-}
-
-/*
-  Release memory of list node
-*/
-void KillNode(TListNode * Node)
-{
-  TMemorySegment NodeSeg;
-
-  NodeSeg.Start.Addr = (TUint_2) Node;
-  NodeSeg.Size = sizeof(TListNode);
-
-  NodeSeg.Release();
-}
-
-// --
+  me_List::Freetown::SpawnNode,
+  me_List::Freetown::KillNode;
 
 /*
   Indicator that list is empty
@@ -153,4 +120,5 @@ TBool TQueue::Add(TUint_2 Payload)
   2024-06-13 Add() works with payload, Traverse() inside, TQueue is inherited
   2024-06-15 Traverse() is always iterates all list, no mid-stops
   2024-06-20 IsEmpty()
+  2024-10-05 Freetown
 */
