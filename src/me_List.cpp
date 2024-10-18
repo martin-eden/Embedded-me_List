@@ -8,12 +8,9 @@
 #include "me_List.h"
 
 #include <me_BaseTypes.h>
+#include <me_MemorySegment.h> // TMemorySegment, Release(), Reserve() ..
 
 using namespace me_List;
-
-using
-  me_List::Freetown::SpawnNode,
-  me_List::Freetown::KillNode;
 
 /*
   Indicator that list is empty
@@ -31,7 +28,7 @@ TBool TStack::IsEmpty()
 TBool TStack::Add(TUint_2 Payload)
 {
   TListNode * Node;
-  if (!SpawnNode(&Node, Payload))
+  if (!Freetown::SpawnNode(&Node, Payload))
     return false;
   Node->Next = Head;
   Head = Node;
@@ -48,7 +45,7 @@ void TStack::Remove()
   if (IsEmpty())
     return;
   TListNode * NextHead = Head->Next;
-  KillNode(Head);
+  Freetown::KillNode(Head);
   Head = NextHead;
 }
 
@@ -98,7 +95,7 @@ TBool TQueue::Add(TUint_2 Payload)
 {
   TListNode * Node;
 
-  if (!SpawnNode(&Node, Payload))
+  if (!Freetown::SpawnNode(&Node, Payload))
     return false;
 
   if (Head == 0)
@@ -112,6 +109,52 @@ TBool TQueue::Add(TUint_2 Payload)
   return true;
 }
 
+// ( Freetown
+
+/*
+  Allocate memory for list node with given data
+*/
+TBool Freetown::SpawnNode(
+  TListNode * * Node,
+  TUint_2 Payload
+)
+{
+  using
+    me_MemorySegment::TMemorySegment,
+    me_MemorySegment::Freetown::Reserve;
+
+  TMemorySegment NodeSeg;
+
+  if (!Reserve(&NodeSeg, sizeof(TListNode)))
+    return false;
+
+  *Node = (TListNode *) NodeSeg.Start.Addr;
+
+  (*Node)->Payload = Payload;
+
+  return true;
+}
+
+/*
+  Release memory of list node
+*/
+void Freetown::KillNode(
+  TListNode * Node
+)
+{
+  using
+    me_MemorySegment::TMemorySegment,
+    me_MemorySegment::Freetown::FromAddrSize,
+    me_MemorySegment::Freetown::Release;
+
+  TMemorySegment NodeSeg =
+    FromAddrSize((TUint_2) Node, sizeof(TListNode));
+
+  Release(&NodeSeg);
+}
+
+// ) Freetown
+
 // --
 
 /*
@@ -121,4 +164,5 @@ TBool TQueue::Add(TUint_2 Payload)
   2024-06-15 Traverse() is always iterates all list, no mid-stops
   2024-06-20 IsEmpty()
   2024-10-05 Freetown
+  2024-10-18
 */
