@@ -2,25 +2,25 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-10-05
+  Last mod.: 2024-10-18
 */
 
 #include "me_List.h"
 
 #include <me_BaseTypes.h>
 #include <me_MemorySegment.h> // TMemorySegment
-#include <me_ManagedMemory.h> // me_ManagedMemory::Freetown::(Reserve/Release)()
+
+using namespace me_List;
 
 using
-  me_List::TListNode,
   me_MemorySegment::TMemorySegment,
-  me_ManagedMemory::Freetown::Reserve,
-  me_ManagedMemory::Freetown::Release;
+  me_MemorySegment::Freetown::Reserve,
+  me_MemorySegment::Freetown::Release;
 
 /*
   Allocate memory for list node with given data
 */
-TBool me_List::Freetown::SpawnNode(
+TBool Freetown::SpawnNode(
   TListNode * * Node,
   TUint_2 Payload
 )
@@ -40,14 +40,15 @@ TBool me_List::Freetown::SpawnNode(
 /*
   Release memory of list node
 */
-void me_List::Freetown::KillNode(
+void Freetown::KillNode(
   TListNode * Node
 )
 {
-  TMemorySegment NodeSeg;
+  using
+    me_MemorySegment::Freetown::FromAddrSize;
 
-  NodeSeg.Start.Addr = (TUint_2) Node;
-  NodeSeg.Size = sizeof(TListNode);
+  TMemorySegment NodeSeg =
+    FromAddrSize((TUint_2) Node, sizeof(TListNode));
 
   Release(&NodeSeg);
 }
@@ -56,4 +57,5 @@ void me_List::Freetown::KillNode(
   2024-05-14
   ...
   2024-10-05
+  2024-10-18
 */
