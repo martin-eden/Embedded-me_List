@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-10-05
+  Last mod.: 2024-10-23
 */
 
 #include "me_List.h"
@@ -128,7 +128,7 @@ TBool Freetown::SpawnNode(
   if (!Reserve(&NodeSeg, sizeof(TListNode)))
     return false;
 
-  *Node = (TListNode *) NodeSeg.Start.Addr;
+  *Node = (TListNode *) NodeSeg.Addr;
 
   (*Node)->Payload = Payload;
 
