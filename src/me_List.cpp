@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-10-23
+  Last mod.: 2024-11-30
 */
 
 #include "me_List.h"
@@ -28,10 +28,13 @@ TBool TStack::IsEmpty()
 TBool TStack::Add(TUint_2 Payload)
 {
   TListNode * Node;
+
   if (!Freetown::SpawnNode(&Node, Payload))
     return false;
+
   Node->Next = Head;
   Head = Node;
+
   return true;
 }
 
@@ -158,11 +161,7 @@ void Freetown::KillNode(
 // --
 
 /*
-  2024-05-14
-  2024-06-02
-  2024-06-13 Add() works with payload, Traverse() inside, TQueue is inherited
-  2024-06-15 Traverse() is always iterates all list, no mid-stops
-  2024-06-20 IsEmpty()
-  2024-10-05 Freetown
-  2024-10-18
+  2024-05 #
+  2024-06 ####
+  2024-10 ##
 */
