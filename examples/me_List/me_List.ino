@@ -2,26 +2,22 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-10-05
+  Last mod.: 2024-12-19
 */
 
 #include <me_List.h>
 
-#include <me_UartSpeeds.h>
-#include <me_InstallStandardStreams.h>
 #include <me_BaseTypes.h>
-
-// Forwards:
-void Test();
+#include <me_Uart.h>
+#include <me_Console.h>
 
 void setup()
 {
-  Serial.begin(me_UartSpeeds::Arduino_Normal_Bps);
-  InstallStandardStreams();
+  me_Uart::Init(me_Uart::Speed_115k_Bps);
 
-  printf("[me_List] Hello there.\n");
+  Console.Print("[me_List] Hello there.");
   Test();
-  printf("Done.\n");
+  Console.Print("[me_List] Done.");
 }
 
 void loop()
@@ -85,14 +81,13 @@ void PrintNode(
   TUint_2 State __attribute__((unused))
 )
 {
-  printf("Data(%u)\n", Data);
+  Console.Write("Data (");
+  Console.Print(Data);
+  Console.Write(" )");
+  Console.EndLine();
 }
 
 /*
-  2024-05-14
-  2024-06-02
-  2024-06-11
-  2024-06-13
-  2024-06-15
-  2024-06-27
+  2024-05 #
+  2024-06 # # # # #
 */
