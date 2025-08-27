@@ -9,7 +9,7 @@
 
 #include <me_BaseTypes.h>
 #include <me_BaseInterfaces.h>
-#include <me_MemorySegment.h> // TMemorySegment, Release(), Reserve() ..
+#include <me_MemorySegment.h> // Release(), Reserve() ..
 
 using namespace me_List;
 
@@ -128,10 +128,9 @@ TBool Freetown::SpawnNode(
 )
 {
   using
-    me_MemorySegment::TMemorySegment,
     me_MemorySegment::Freetown::Reserve;
 
-  TMemorySegment NodeSeg;
+  TAddressSegment NodeSeg;
 
   if (!Reserve(&NodeSeg, sizeof(TListNode)))
     return false;
@@ -151,11 +150,10 @@ void Freetown::KillNode(
 )
 {
   using
-    me_MemorySegment::TMemorySegment,
     me_MemorySegment::Freetown::FromAddrSize,
     me_MemorySegment::Freetown::Release;
 
-  TMemorySegment NodeSeg =
+  TAddressSegment NodeSeg =
     FromAddrSize((TUint_2) Node, sizeof(TListNode));
 
   Release(&NodeSeg);
