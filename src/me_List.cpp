@@ -2,12 +2,13 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-11-30
+  Last mod.: 2025-08-27
 */
 
-#include "me_List.h"
+#include <me_List.h>
 
 #include <me_BaseTypes.h>
+#include <me_BaseInterfaces.h>
 #include <me_MemorySegment.h> // TMemorySegment, Release(), Reserve() ..
 
 using namespace me_List;
@@ -25,7 +26,9 @@ TBool TStack::IsEmpty()
 
   Returns false when no memory.
 */
-TBool TStack::Add(TUint_2 Payload)
+TBool TStack::Add(
+  TUint_2 Payload
+)
 {
   TListNode * Node;
 
@@ -94,7 +97,9 @@ void TStack::Traverse(
 
   Returns false when there are no memory.
 */
-TBool TQueue::Add(TUint_2 Payload)
+TBool TQueue::Add(
+  TUint_2 Payload
+)
 {
   TListNode * Node;
 
@@ -161,7 +166,5 @@ void Freetown::KillNode(
 // --
 
 /*
-  2024-05 #
-  2024-06 ####
-  2024-10 ##
+  2024 # # # # # # #
 */

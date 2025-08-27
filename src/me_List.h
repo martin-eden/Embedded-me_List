@@ -2,12 +2,13 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-09-12
+  Last mod.: 2025-08-27
 */
 
 #pragma once
 
 #include <me_BaseTypes.h>
+#include <me_BaseInterfaces.h>
 
 namespace me_List
 {
@@ -86,14 +87,5 @@ namespace me_List
 }
 
 /*
-  2024-05-14
-  2024-05-29
-  2024-06-02
-  2024-06-11
-  2024-06-13
-  2024-06-15
-  2024-06-21
-  2024-06-22 Classes. Hid SpawnNode()/KillNode()
-  2024-10-05 SpawnNode/KillNode() is back as freelancers in Freetown
-  2024-10-18
+  2024 # # # # # # # # # #
 */
