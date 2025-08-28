@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2025-08-27
+  Last mod.: 2025-08-29
 */
 
 #include <me_List.h>
@@ -150,11 +150,10 @@ void Freetown::KillNode(
 )
 {
   using
-    me_MemorySegment::Freetown::FromAddrSize,
     me_MemorySegment::Freetown::Release;
 
   TAddressSegment NodeSeg =
-    FromAddrSize((TUint_2) Node, sizeof(TListNode));
+    { .Addr = (TAddress) Node, .Size = sizeof(TListNode) };
 
   Release(&NodeSeg);
 }
