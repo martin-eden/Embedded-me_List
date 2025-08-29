@@ -9,7 +9,7 @@
 
 #include <me_BaseTypes.h>
 #include <me_BaseInterfaces.h>
-#include <me_MemorySegment.h> // Release(), Reserve() ..
+#include <me_WorkmemTools.h> // Release(), Reserve() ..
 
 using namespace me_List;
 
@@ -48,10 +48,15 @@ TBool TStack::Add(
 */
 void TStack::Remove()
 {
+  TListNode * NextHead;
+
   if (IsEmpty())
     return;
-  TListNode * NextHead = Head->Next;
+
+  NextHead = Head->Next;
+
   Freetown::KillNode(Head);
+
   Head = NextHead;
 }
 
@@ -127,12 +132,9 @@ TBool Freetown::SpawnNode(
   TUint_2 Payload
 )
 {
-  using
-    me_MemorySegment::Freetown::Reserve;
-
   TAddressSegment NodeSeg;
 
-  if (!Reserve(&NodeSeg, sizeof(TListNode)))
+  if (!me_WorkmemTools::Reserve(&NodeSeg, sizeof(TListNode)))
     return false;
 
   *Node = (TListNode *) NodeSeg.Addr;
@@ -149,13 +151,10 @@ void Freetown::KillNode(
   TListNode * Node
 )
 {
-  using
-    me_MemorySegment::Freetown::Release;
-
   TAddressSegment NodeSeg =
     { .Addr = (TAddress) Node, .Size = sizeof(TListNode) };
 
-  Release(&NodeSeg);
+  me_WorkmemTools::Release(&NodeSeg);
 }
 
 // ) Freetown
