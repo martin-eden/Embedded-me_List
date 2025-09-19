@@ -2,32 +2,13 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2024-12-19
+  Last mod.: 2025-09-19
 */
 
 #include <me_List.h>
 
 #include <me_BaseTypes.h>
-#include <me_Uart.h>
 #include <me_Console.h>
-
-void setup()
-{
-  me_Uart::Init(me_Uart::Speed_115k_Bps);
-
-  Console.Print("[me_List] Hello there.");
-  Test();
-  Console.Print("[me_List] Done.");
-}
-
-void loop()
-{
-}
-
-// --
-
-// Forwards:
-void PrintNode(TUint_2 Data, TUint_2 State);
 
 // Show stuff
 void Test()
@@ -54,8 +35,8 @@ void Test()
         Call twice.
   */
 
-  // me_List::TStack List;
-  me_List::TQueue List;
+  me_List::TStack List;
+  // me_List::TQueue List;
 
   for (TUint_2 Counter = 1; Counter <= 4; ++Counter)
     List.Add(Counter);
@@ -78,13 +59,29 @@ void Test()
 */
 void PrintNode(
   TUint_2 Data,
-  TUint_2 State __attribute__((unused))
+  TUint_2 State [[gnu::unused]]
 )
 {
-  Console.Write("Data (");
+  Console.Write("Data");
   Console.Print(Data);
-  Console.Write(" )");
   Console.EndLine();
+}
+
+void setup()
+{
+  Console.Init();
+
+  Console.Print("( [me_List] test");
+  Console.Indent();
+
+  Test();
+
+  Console.Unindent();
+  Console.Print(") Done");
+}
+
+void loop()
+{
 }
 
 /*
