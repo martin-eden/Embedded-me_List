@@ -2,7 +2,7 @@
 
 /*
   Author: Martin Eden
-  Last mod.: 2025-11-18
+  Last mod.: 2026-01-10
 */
 
 #include <me_List.h>
@@ -151,7 +151,7 @@ void Freetown::KillNode(
   TListNode * Node
 )
 {
-  TAddressSegment NodeSeg = AsAddrSeg_M(*Node);
+  TAddressSegment NodeSeg = M_AsAddrSeg(*Node);
 
   me_WorkmemTools::Release(&NodeSeg);
 }
